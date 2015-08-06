@@ -10,7 +10,8 @@ before_install:
    - wget -q -P /opt/maven http://xenia.sote.hu/ftp/mirrors/www.apache.org/maven/maven-3/3.3.3/binaries/apache-maven-3.3.3-bin.tar.gz
    - tar -xzf /opt/maven/apache-maven-3.3.3-bin.tar.gz -C /opt/maven
    - export PATH=/opt/maven/apache-maven-3.3.3/bin:$PATH
-   - ./ci/create_settings.sh
+   - export MAVEN_PROJECT_VERSION=$(mvn org.apache.maven.plugins:maven-help-plugin:2.1.1:evaluate -Dexpression=project.version | grep -v "\[")
+   #- ./ci/create_settings.sh
 
 script:
    - mvn -version
