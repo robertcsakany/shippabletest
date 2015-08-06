@@ -15,7 +15,7 @@ before_install:
 
 script:
    - mvn -version
-   - echo Maven project version is: $MAVEN_PROJECT_VERSION
+   - echo "Maven project version is: $MAVEN_PROJECT_VERSION"
    - mvn --batch-mode clean deploy --settings ./settings.xml
 
 after_success:
