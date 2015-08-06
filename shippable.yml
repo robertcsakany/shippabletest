@@ -1,0 +1,25 @@
+language: java
+
+env:
+jdk:
+   - oraclejdk7
+
+before_install:
+   - chmod +x ./ci/*.sh
+   - ./ci/create_settings.sh
+   - mkdir -p /opt/maven
+   - wget -q -P /opt/maven http://xenia.sote.hu/ftp/mirrors/www.apache.org/maven/maven-3/3.3.3/binaries/apache-maven-3.3.3-bin.tar.gz
+   - tar -xzf /opt/maven/apache-maven-3.3.3-bin.tar.gz -C /opt/maven
+   - export PATH=/opt/maven/apache-maven-3.3.3/bin:$PATH
+
+script:
+   - mvn -version
+   - echo Maven project version is: $MAVEN_PROJECT_VERSION
+   - mvn --batch-mode clean deploy --settings ./settings.xml
+
+after_success:
+  - ./ci/git_tag_build.sh
+
+notifications:
+  email: false
+
